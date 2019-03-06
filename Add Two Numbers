@@ -1,0 +1,29 @@
+static int speedup = [](){
+    std::ios::sync_with_stdio(0);
+    std::cin.tie(0);
+    return 0;
+}();
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        //暴力solution
+        ListNode head(0);
+        ListNode* curr = &head;
+        int cnt = 0; //进位
+        while (l1 || l2) {
+            int x = (l1 ? l1->val : 0);
+            int y = (l2 ? l2->val : 0);
+            //curr->val = (cnt + x + y) % 10;
+            curr->next = new ListNode((cnt + x + y) % 10);
+            curr = curr->next; 
+            if (l1) l1 = l1->next;
+            if (l2) l2 = l2->next;
+            cnt = (cnt + x + y) / 10;
+        }
+        if (cnt) {
+            curr->next = new ListNode(cnt);
+        }
+        return head.next;
+    }
+};
