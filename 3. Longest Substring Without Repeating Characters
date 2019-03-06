@@ -1,0 +1,39 @@
+static int speedup = [](){
+    std::ios::sync_with_stdio(0);
+    std::cin.tie(0);
+    return 0;
+}();
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        if (s == "") return 0;
+        string str = ""; //存放当前不重复子串
+        vector<string> allstr; //存放所有不重复子串
+        int maxlen = 1;  //最长子串长度
+        int start = 0;  //当前查找的字符串下标
+        int pos = 0;  //当前查找的子串的下标
+        str.push_back(s[0]);
+        
+        for (int i = 1; i < s.size(); i++) {
+            pos = str.find(s[i]);
+            //判断是否在当前子串出现重复
+            if (pos == std::string::npos) {
+                str.push_back(s[i]);
+                if (i + 1 == s.size()) {
+                    maxlen = maxlen > str.size() ? maxlen : str.size();
+                } 
+            }
+            else {
+                maxlen = maxlen > str.size() ? maxlen : str.size();
+                allstr.push_back(str);
+                str.clear();
+                //从重复出现的下一个字符开始继续查找
+                start = start + pos + 1;
+                i = start;
+                str.push_back(s[i]);
+            }
+        }
+        return maxlen;
+    }
+};
