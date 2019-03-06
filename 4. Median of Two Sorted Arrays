@@ -1,0 +1,52 @@
+static int speedup = [](){
+    std::ios::sync_with_stdio(0);
+    std::cin.tie(0);
+    return 0;
+}();
+
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        if (nums1.size() == 0) {
+            int l = nums2.size();
+            if (l % 2 == 1) return nums2[l / 2] * 1.0;
+            else return double(nums2[l / 2] + nums2[l / 2 - 1]) / 2.0;
+        }
+        if (nums2.size() == 0) {
+            int l = nums1.size();
+            if (l % 2 == 1) return nums1[l / 2] * 1.0;
+            else return double(nums1[l / 2] + nums1[l / 2 - 1]) / 2.0;
+        }
+        //考虑全不为空数组的情况
+        int len = nums1.size() + nums2.size();
+        int i = 0, j = 0;
+        int cnt = -1;  //综合下标
+        vector<int> tmp;
+        while (cnt < len / 2) {
+            if (i == nums1.size()) {
+                tmp.push_back(nums2[j]);
+                j++;
+                cnt++;
+            }
+            else if (j == nums2.size()){
+                tmp.push_back(nums1[i]);
+                i++;
+                cnt++;
+            }
+            if (cnt == len / 2) break;
+            while (i < nums1.size() && j < nums2.size()) {
+                if (nums1[i] < nums2[j]) {
+                    tmp.push_back(nums1[i]);
+                    i++;
+                }
+                else {
+                    tmp.push_back(nums2[j]);
+                    j++;
+                }
+                cnt++;
+                if (cnt == len / 2) break;
+            }
+        }
+        return (len % 2 == 1) ? tmp[cnt] * 1.0 : (tmp[cnt] + tmp[cnt - 1]) / 2.0;
+    }
+};
