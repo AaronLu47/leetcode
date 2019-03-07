@@ -1,0 +1,37 @@
+static int speedup = [](){
+    std::ios::sync_with_stdio(0);
+    std::cin.tie(0);
+    return 0;
+}();
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        std::sort(nums.begin(), nums.end());
+        vector<vector<int>> sol;
+        for (int i = 0; i < nums.size(); i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            if (nums[i] > 0) break;
+            int res = -nums[i];
+            int s = i + 1;
+            int e = nums.size() - 1;
+            
+            while (s < e) {
+                if (nums[s] + nums[e] == res) {
+                    sol.push_back({nums[i], nums[s], nums[e]});
+                    s++;
+                    e--;
+                    while (s < e && nums[s] == nums[s - 1]) s++;
+                    while (s < e && nums[e] == nums[e + 1]) e--;
+                }
+                else if (nums[s] + nums[e] < res) {
+                    s++;
+                }
+                else {
+                    e--;
+                }
+            }
+        }
+        return sol;
+    }
+};
