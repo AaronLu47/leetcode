@@ -1,0 +1,34 @@
+class Solution {
+public:
+    string getPhoneString(char digit) {       
+        map<char, string> phoneString;
+        phoneString['2'] = "abc";
+        phoneString['3'] = "def";
+        phoneString['4'] = "ghi";
+        phoneString['5'] = "jkl";
+        phoneString['6'] = "mno";
+        phoneString['7'] = "pqrs";
+        phoneString['8'] = "tuv";
+        phoneString['9'] = "wxyz";
+
+        return phoneString[digit];
+    }
+    vector<string> str;  //保存所有字符串
+    void backtrack(string curr, string next) {
+        if (next.size() == 0) str.push_back(curr);
+        else {
+            //仍有字母要加
+            char dig = next[0];
+            string letters = getPhoneString(dig);
+            for (int i = 0; i < letters.size(); i++) {
+                string letter = letters.substr(i, 1);
+                backtrack(curr + letter, next.substr(1));
+            }
+        }
+    }
+    
+    vector<string> letterCombinations(string digits) {
+        if (digits.size() != 0) backtrack("", digits);
+        return str;
+    }
+};
