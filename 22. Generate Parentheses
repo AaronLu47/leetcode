@@ -1,0 +1,23 @@
+static int speedup = [](){
+    std::ios::sync_with_stdio(0);
+    std::cin.tie(0);
+    return 0;
+}();
+
+class Solution {
+public:
+    void backtrack(vector<string> &str, string s, int open, int close, int n) {
+        if (s.size() == n * 2) {
+            str.push_back(s);
+            return ;
+        }
+        if (open < n) backtrack(str, s + "(", open + 1, close, n);
+        if (close < open) backtrack(str, s + ")", open, close + 1, n);
+    }
+    
+    vector<string> generateParenthesis(int n) {
+        vector<string> allstr;
+        backtrack(allstr, "", 0, 0, n);
+        return allstr;
+    }
+};
