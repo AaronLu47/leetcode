@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int sum = 0; //遍历和
+        int max_sum = nums[0]; //子串和最大值
+        int min_sum = 0; //已遍历子串和最小值
+        for (int i:nums) {
+            sum += i;
+            max_sum = max(max_sum, sum - min_sum);
+            min_sum = min(sum, min_sum);
+        }
+        return max_sum;
+    }
+};
