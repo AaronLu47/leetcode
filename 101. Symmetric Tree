@@ -1,0 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+static bool speedup = [](){
+    std::ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    return 0;
+}();
+
+class Solution {
+public:
+    bool isMirror(TreeNode* left, TreeNode* right) {
+        if (left == nullptr && right == nullptr) return true;
+        else if (left == nullptr || right == nullptr) return false;
+        else {
+            bool flag = (left->val == right->val);
+            flag &= isMirror(left->left, right->right);
+            flag &= isMirror(left->right, right->left);
+            return flag;
+        }
+    }
+    bool isSymmetric(TreeNode* root) {
+        if (!root) return true;
+        return isMirror(root->left, root->right);
+    }
+};
