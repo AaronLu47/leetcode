@@ -50,7 +50,6 @@ public:
                 tb = tb->next;
             }
         }
-        delete ta, tb;
         return NULL;
     }
 };
