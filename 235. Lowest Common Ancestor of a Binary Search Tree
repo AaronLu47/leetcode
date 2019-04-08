@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+static int speedup = [](){
+    std::ios::sync_with_stdio(0);
+    std::cin.tie(0);
+    return 0;
+}();
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (p == root || q == root) return root;
+        if (p->val < root->val && q->val > root->val) return root;
+        if (p->val > root->val && q->val < root->val) return root;
+        TreeNode* cur = new TreeNode(0);
+        //TreeNode* cur = new TreeNode(0);
+        cur = root;
+        //cur = root;
+        while (cur->left || cur->right) {
+            if (p->val < cur->val && q->val < cur->val) {
+                cur = cur->left;
+            }
+            else if (p->val > cur->val && q->val > cur->val) {
+                cur = cur->right;
+            }
+            else {
+                return cur;
+            }
+        }
+        //delete cur;
+        return cur;
+    }
+};
