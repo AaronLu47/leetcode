@@ -1,0 +1,35 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+static int speedup = [](){
+    std::ios::sync_with_stdio(0);
+    std::cin.tie(0);
+    return 0;
+}();
+class Solution {
+public:
+    bool findTarget(TreeNode* root, int k) {
+        queue<TreeNode*> node;
+        node.push(root);
+        unordered_map<int, int> tar = {};
+        while (!node.empty()) {
+            TreeNode* curr = node.front();
+            if (curr->left) node.push(curr->left);
+            if (curr->right) node.push(curr->right);
+            int a = k - curr->val;
+            if (tar.count(a)) {
+                //差值存在
+                return true;
+            }
+            tar[curr->val] = 1;
+            node.pop();
+        }
+        return false;
+    }
+};
