@@ -1,0 +1,32 @@
+static int speedup = [](){
+    std::ios::sync_with_stdio(0);
+    std::cin.tie(0);
+    return 0;
+}();
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        //二分查找
+        if (nums.size() == 0) return -1;
+        int l = 0, r = nums.size() - 1, m = 0;
+        while (l < r) {
+            m = (l + r) / 2;
+            if (nums[m] > nums[r]) l = m + 1;
+            else r = m;
+        }
+        //以上已找到list最小值索引
+        int sm = l;
+        l = 0, r = nums.size() - 1;
+        if (nums[sm] <= target && nums[r] >= target) {
+            l = sm;
+        }
+        else r = sm;
+        while (l <= r) {
+            m = (l + r) / 2;
+            if (nums[m] == target) return m;
+            else if (nums[m] > target) r = m - 1;
+            else l = m + 1;
+        }
+        return -1;
+    }
+};
