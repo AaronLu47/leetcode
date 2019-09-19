@@ -1,0 +1,36 @@
+/**
+ * Given four lists A, B, C, D of integer values, compute how many tuples (i, j, k, l) 
+ * there are such that A[i] + B[j] + C[k] + D[l] is zero.
+ * To make problem a bit easier, all A, B, C, D have same length of N where 0 ≤ N ≤ 500.
+ * All integers are in the range of -2^28 to 2^28 - 1 and the result is guaranteed to be at most 2^31 - 1.
+*/
+
+
+
+static int speed = [](){
+    std::ios::sync_with_stdio();
+    std::cin.tie(0);
+    return 0;
+}();
+
+
+class Solution {
+public:
+    int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        unordered_map<int, int> m;
+        int res = 0;
+        if (A.size()==0) return res;
+        
+        for (auto i : A) {
+            for (auto j : B) {
+                m[i+j]++;
+            }
+        }
+        for (auto i : C) {
+            for (auto j : D) {
+                if (m.count(0-i-j) != 0) res += m[0-i-j];
+            }
+        }
+        return res;
+    }
+};
