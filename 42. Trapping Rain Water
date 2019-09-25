@@ -1,0 +1,45 @@
+/**
+ * Given n non-negative integers representing an elevation map where the width of each bar is 1, 
+ * compute how much water it is able to trap after raining.
+
+ * Example:
+ * Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+ * Output: 6
+*/
+
+static int speed = [](){
+    std::ios::sync_with_stdio();
+    std::cin.tie(0);
+    return 0;
+}();
+
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        //bar数量小于3的都不能装水
+        if (height.size() < 3) return 0;
+        
+        int x=0, y=height.size()-1;
+        //将两边高度为0的bar省略
+        while (x<y && height[x]==0) x++;
+        while (x<y && height[y]==0) y--;
+        //中间集中装水的bar至少要相差2
+        if (y-x<2) return 0;
+        int i=x, j=y;
+        int cnt = 0;
+        int max_l=0, max_r=0;
+        while (i<=j) {
+            if (height[i] <= height[j]) {
+                if (height[i] > max_l) max_l = height[i];
+                else if (height[i] < max_l) cnt += max_l - height[i];
+                i++;
+            }
+            else {
+                if (height[j] > max_r) max_r = height[j];
+                else if (height[j] < max_r) cnt += max_r - height[j];
+                j--;
+            }
+        }
+        return cnt;
+    }
+};
