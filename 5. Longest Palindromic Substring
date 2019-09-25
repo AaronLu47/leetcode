@@ -1,38 +1,29 @@
-static int speedup = [](){
-    std::ios::sync_with_stdio(0);
-    std::cin.tie(0);
-    return 0;
-}();
 
 class Solution {
 public:
     string longestPalindrome(string s) {
-        //遍历每一个子串时间复杂度太大n^3
-        //选择manacher算法
-        if (s == "") return "";
-        //经过处理后的字符串所有回文子串都变成奇数
-        string str = "#";
-        for (int i = 0; i < s.size(); i++) {
-            str.push_back(s[i]);
-            str.push_back('#');
-        }
-        int id = 0, mx = 0, mp = 1, mi = 0;
-        int p[str.size()]; //存储str回文半径 
-        memset(p, 1, sizeof(p));
-        for (int i = 1; i < str.size(); i++) {
-            p[i] = mx > i ? min(p[2 * id - i], mx - i) : 1;
-            while (i - p[i] > -1 && i + p[i] < str.size() && str[i + p[i]] == str[i - p[i]]) p[i]++;
-            if (mx < i + p[i]) {
-                mx = i + p[i];
-                id = i;
+        if (s.empty() || s.size() == 1) return s;
+        int max_len = 1;
+        int start = 0;
+        int x, y;
+        for (int i=0; i<s.size();) {
+            if (s.size()-i < max_len/2) break;
+            x = i;
+            y = i;
+            //加入重复字符
+            while (x<s.size()-1 && s[x] == s[x+1])
+                x++;
+            i = x+1;
+            //扩张回文字符串
+            while (x<s.size()-1 && y>0 && s[x+1] == s[y-1]) {
+                x++; y--;
             }
-            if (mp < p[i]) {
-                mp = p[i];
-                mi = i;
+            //max_len = x-y+1 > max_len ? x-y+1 : max_len;
+            if (x-y+1 > max_len) {
+                max_len = x-y+1;
+                start = y;
             }
         }
-        str = str.substr(mi - mp + 1, 2 * mp - 1);
-        str.erase(std::remove(str.begin(), str.end(), '#'), str.end());
-        return str;
+        return s.substr(start, max_len);
     }
 };
